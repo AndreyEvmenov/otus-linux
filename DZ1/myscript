@@ -1,0 +1,39 @@
+﻿Script started on Thu 31 Jan 2019 04:12:19 PM MSK
+
+]0;root@1stwrkst:/etc[?1034h[root@1stwrkst etc]# yum update -y
+Complete!
+
+]0;root@1stwrkst:/etc[root@1stwrkst etc]# yum install -y ncurses-devel make gcc bc bison flex elfutils-libelf-devel openssl-devel grub2
+Complete!
+
+]0;root@1stwrkst:/etc[root@1stwrkst etc]# cd /usr/src/
+
+]0;root@1stwrkst:/usr/src[root@1stwrkst src]# wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.20.6.tar.xz
+bash: wget: command not found
+]0;root@1stwrkst:/usr/src[root@1stwrkst src]# yum install -y wget
+                                                                                            
+]0;root@1stwrkst:/usr/src[root@1stwrkst src]# wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.20.6.tar.xz
+
+]0;root@1stwrkst:/usr/src[root@1stwrkst src]# tar -xvf linux-4.20.6.tar.xz
+
+]0;root@1stwrkst:/usr/src[root@1stwrkst src]# cd /boot
+
+]0;root@1stwrkst:/boot[root@1stwrkst boot]# ll
+
+]0;root@1stwrkst:/boot[root@1stwrkst boot]# cd /usr/src/linux-4.20.6
+
+]0;root@1stwrkst:/usr/src/linux-4.20.6[root@1stwrkst linux-4.20.6]# cp /boot/config-3.10.0-957.1.3.el7.x86_64 .config
+
+]0;root@1stwrkst:/usr/src/linux-4.20.6[root@1stwrkst linux-4.20.6]# make --oldconfig 
+
+]0;root@1stwrkst:/usr/src/linux-4.20.6[root@1stwrkst linux-4.20.6]# make
+
+]0;root@1stwrkst:/usr/src/linux-4.20.6[root@1stwrkst linux-4.20.6]# make modules_install
+
+]0;root@1stwrkst:/usr/src/linux-4.20.6[root@1stwrkst linux-4.20.6]# make install
+
+]0;root@1stwrkst:/usr/src/linux-4.20.6[root@1stwrkst linux-4.20.6]# grub2-mkconfig -o /boot/grub2/grub.cfg
+
+]0;root@1stwrkst:/usr/src/linux-4.20.6[root@1stwrkst linux-4.20.6]# reboot
+
+
