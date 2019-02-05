@@ -25,11 +25,14 @@ MACHINES = {
                         :dfile => './sata4.vdi',
                         :size => 250, # Megabytes
                         :port => 4
-                }
+                },
 
-	}
-
-		
+                :sata5 => {
+                        :dfile => './sata5.vdi',
+                        :size => 250, # Megabytes
+                        :port => 5
+        	}
+	}	
   },
 }
 
@@ -66,7 +69,14 @@ Vagrant.configure("2") do |config|
  	  box.vm.provision "shell", inline: <<-SHELL
 	      mkdir -p ~root/.ssh
               cp ~vagrant/.ssh/auth* ~root/.ssh
-	      yum install -y mdadm smartmontools hdparm gdisk
+	      yum install -y mdadm smartmontools hdparm gdisk lvm2
+	      mdadm --create --verbose /dev/md0 -l 6 -n 5 /dev/sd{b,c,d,e,f}
+        pvcreate /dev/md0
+        vgcreate vg00  /dev/md0
+        lvcreate -l100%FREE -n lv00 vg00
+        mkfs.ext4 /dev/vg00/lv00
+        mkdir /DB_DATA
+        mount /dev/mapper/vg00-lv00 /DB_DATA
   	  SHELL
 
       end
