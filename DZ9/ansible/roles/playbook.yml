@@ -1,0 +1,8 @@
+---
+- name: Test playbook
+  hosts: webservers
+  become: true
+  gather_facts: true
+
+  roles:
+    - nginx
